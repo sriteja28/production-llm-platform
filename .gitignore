@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Claude Code local settings
+.claude/
+CLAUDE.local.md
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Coverage
+.coverage
+htmlcov/
+coverage.xml
+
+# ML tooling
+wandb/
+mlruns/
+.modal-cache/
+
+# Python tooling
+.python-version
+
+# Model weights and large files
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+models/
+checkpoints/
+
+# Logs and data
+*.log
+logs/
+data/raw/
+*.db
+*.sqlite
+
+# Benchmark outputs
+benchmark-results/
+profiling-output/
+
+# Cloud credentials
+.modal/
+.runpod/
+*.pem
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Private strategy docs (job-hunt positioning, GTM prompts, publishing plan,
+# learning anchors). Kept locally for the user's own reference; never committed.
+_private/

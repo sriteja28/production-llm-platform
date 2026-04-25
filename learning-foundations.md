@@ -1,0 +1,319 @@
+# AI/ML/LLM Foundations — Pre-Build Learning Path
+
+A curated 3-4 week foundation for a senior systems engineer entering
+AI infrastructure. Ruthlessly prioritized to build production-AI
+engineering depth before writing any code for the platform.
+
+Complete this BEFORE starting Milestone 1 of the production-llm-platform
+build.
+
+## Operating Principles
+
+- This is the **minimum viable foundation**, not a comprehensive curriculum
+- Type out code yourself — do not just watch passively
+- Skip anything not on this list unless you have a specific reason
+- Target completion: 3-4 weeks at full-time pace, then start Milestone 1
+- Total time investment: ~50-70 hours
+
+---
+
+## Tier 1 — MUST DO (covers ~80% of the foundation)
+
+### Andrej Karpathy — Neural Networks: Zero to Hero (YouTube, free)
+
+The single best AI/ML resource ever made for engineers. Karpathy explains
+everything from first principles, builds it in PyTorch, and assumes
+you're a smart engineer not an ML PhD.
+
+Watch in this exact order:
+
+1. **Micrograd** — backpropagation from scratch (~2 hrs)
+2. **Makemore Part 1** — bigram language model (~2 hrs)
+3. **Makemore Part 2** — MLP language model (~1.5 hrs)
+4. **Makemore Part 3** — activations, gradients, batch norm (~2 hrs)
+5. **Makemore Part 4** — backprop ninja (~2 hrs, can skim)
+6. **Makemore Part 5** — building a WaveNet (~2 hrs)
+7. **Let's build GPT** — building a transformer from scratch (~2 hrs) ★
+8. **Let's build the GPT Tokenizer** — tokenization deep dive (~2 hrs) ★
+9. **Let's reproduce GPT-2** — full pretraining pipeline (~4 hrs,
+   ambitious)
+
+★ = highest priority videos for AI infrastructure work
+
+**Time investment:** 40-50 hours including hands-on work.
+**Goal:** Be able to whiteboard the forward pass of a decoder-only
+transformer, including attention, MLP, residuals, and layer norm, from
+memory.
+
+URL: https://www.youtube.com/@AndrejKarpathy
+
+### 3Blue1Brown — Neural Networks series (YouTube, free)
+
+Visual intuition for what neural networks actually do. Watch BEFORE
+Karpathy's series — the visual mental models make everything click
+faster when you hit the code.
+
+Six videos, ~3 hours total:
+1. But what is a neural network?
+2. Gradient descent, how neural networks learn
+3. What is backpropagation really doing?
+4. Backpropagation calculus
+5. But what is a GPT? Visual intro to transformers
+6. Attention in transformers, visually explained
+
+URL: https://www.youtube.com/@3blue1brown
+
+### The Illustrated Transformer — Jay Alammar (blog post)
+
+The single best written explanation of how transformers work. Read it
+3 times over a week. Each read unlocks something new.
+
+URL: https://jalammar.github.io/illustrated-transformer/
+
+### The Illustrated GPT-2 — Jay Alammar (blog post)
+
+Companion piece, specifically about decoder-only models (which is what
+every modern LLM is).
+
+URL: https://jalammar.github.io/illustrated-gpt2/
+
+---
+
+## Tier 2 — SHOULD DO (the next 15%)
+
+### Karpathy — State of GPT (YouTube talk, ~40 min)
+
+The cleanest mental model of how modern LLMs are trained: pretraining →
+SFT → RLHF. You'll reference this framework constantly in interviews.
+
+Search "Andrej Karpathy State of GPT" on YouTube.
+
+### Simon Boehm — How to Optimize a CUDA Matmul Kernel (blog post)
+
+The single best resource for understanding GPU performance from a
+software engineer's perspective. Don't try to write CUDA kernels — just
+read this to understand what makes them fast or slow. Read it three
+times.
+
+URL: https://siboehm.com/articles/22/CUDA-MMM
+
+### PagedAttention paper (vLLM original paper)
+
+Read after Karpathy's "Let's build GPT." This paper introduces how vLLM
+solves KV cache fragmentation. Foundational reading for AI infra roles.
+Section 3 (PagedAttention) and Section 4 (system design) are the
+critical parts.
+
+Title: "Efficient Memory Management for Large Language Model Serving
+with PagedAttention"
+URL: https://arxiv.org/abs/2309.06180
+
+### FlashAttention paper
+
+Read for *intuition only* — what makes attention slow, why memory access
+patterns matter. Skip the math; the high-level message about IO-aware
+algorithms is what matters.
+
+Title: "FlashAttention: Fast and Memory-Efficient Exact Attention with
+IO-Awareness"
+URL: https://arxiv.org/abs/2205.14135
+
+### Hugging Face NLP Course (free, online)
+
+Skim chapters 1-3 only. Not deep — geared toward fine-tuning more than
+infrastructure. But you should know what tokenizers, datasets, and the
+Transformers library look like in practice.
+
+URL: https://huggingface.co/learn/nlp-course
+
+### Anthropic — Building Effective Agents
+
+The canonical guide to agent system design. Defines the vocabulary
+(workflows, agents, tools, augmented LLMs) used in modern agent
+implementations.
+
+URL: https://www.anthropic.com/research/building-effective-agents
+
+### OWASP Top 10 for LLM Applications
+
+Industry standard for LLM security categories. Required vocabulary
+for any production LLM work — prompt injection, model DoS, training
+data poisoning, output leakage, etc.
+
+URL: https://owasp.org/www-project-top-10-for-large-language-model-applications/
+
+---
+
+## Tier 3 — REFERENCE MATERIAL (read when relevant, not now)
+
+### Attention Is All You Need (the original transformer paper)
+
+Skim only. Read Section 3 for the architecture. The illustrated blog
+posts above are clearer than the paper for first exposure.
+
+URL: https://arxiv.org/abs/1706.03762
+
+### Language Models are Few-Shot Learners (GPT-3 paper)
+
+Skim. Important historically. Don't memorize.
+
+URL: https://arxiv.org/abs/2005.14165
+
+### Training language models to follow instructions (InstructGPT/RLHF)
+
+Skim. Understand the concept of RLHF, don't memorize details.
+
+URL: https://arxiv.org/abs/2203.02155
+
+### Reasoning models / test-time compute
+
+The shift to o1/o3/Claude extended thinking models has changed inference
+economics in 2026. Important for any production system that has to
+budget for reasoning workloads.
+
+Read at minimum (1-2 hours):
+- OpenAI's o1 system card (intuition only)
+- DeepSeek-R1 paper (skim Section 3 for chain-of-thought training intuition)
+- One blog post on speculative decoding's relationship to reasoning
+
+### Anthropic published research
+
+Read 2-3 papers that interest you, especially on interpretability and
+Constitutional AI.
+
+URL: https://www.anthropic.com/research
+
+### Multimodal AI vocabulary
+
+You don't need depth here, just vocabulary. Skim:
+- One LayoutLM paper abstract (document AI)
+- One blog post on vision-language models (e.g., LLaVA)
+- One blog post on voice AI architecture (e.g., Deepgram Nova or
+  Whisper)
+
+Enough to discuss in interviews if it comes up.
+
+### Stanford CS25 — Transformers United (YouTube)
+
+Pick 4-5 lectures based on topics you want depth on. Graduate-level
+but accessible. Particularly useful: original transformer lecture, GPT
+lecture, inference optimization lecture.
+
+URL: https://web.stanford.edu/class/cs25/
+
+---
+
+## What to DELIBERATELY SKIP
+
+These are common recommendations that are wrong for your specific goal
+and background. Skip them.
+
+- **Andrew Ng's Deep Learning Specialization (Coursera)** — too slow,
+  too foundational, designed for people without your engineering
+  background. Will bore you and waste 3-4 weeks.
+- **Fast.ai courses** — excellent for ML engineers wanting to do model
+  training. Wrong audience for AI infrastructure.
+- **Anything called "ML for Beginners" or "AI Bootcamp"** — wrong
+  altitude for a senior IC.
+- **Mathematics-heavy resources (Bishop's textbook, Goodfellow's Deep
+  Learning book)** — necessary for ML research, unnecessary for
+  infrastructure work.
+- **Most YouTube AI tutorials** — almost all are surface-level wrappers
+  on OpenAI APIs. Karpathy is the exception that proves the rule.
+- **Computer vision deep specialization** — unless your target role
+  specifically requires it (most AI infra/AI engineer roles do not).
+
+---
+
+## 4-Week Schedule (Full-Time Pace)
+
+### Week 1: Visual + Conceptual Foundation
+- 3Blue1Brown Neural Networks series (3 hrs)
+- Karpathy Micrograd + Makemore Parts 1-2 (5-6 hrs hands-on)
+- Read Illustrated Transformer twice (2 hrs)
+- **Goal end of week:** understand what a neural network does and how
+  backprop works at a code level
+
+### Week 2: Transformers Deep
+- Karpathy Makemore Parts 3-5 (5-6 hrs)
+- Karpathy "Let's build GPT" with full code-along (4-5 hrs)
+- Read Illustrated GPT-2 (1 hr)
+- Karpathy "Let's build the GPT Tokenizer" (3 hrs)
+- **Goal end of week:** can implement attention from scratch in PyTorch
+  in an afternoon
+
+### Week 3: Inference Internals + Production Reality
+- Karpathy "Let's reproduce GPT-2" (skim or full, 2-4 hrs)
+- Karpathy "State of GPT" talk (1 hr)
+- PagedAttention paper, deep read (2-3 hrs)
+- FlashAttention paper for intuition (1 hr)
+- Simon Boehm CUDA matmul blog post — read 3 times (3-4 hrs)
+- Anthropic "Building effective agents" blog post (1 hr)
+- OWASP Top 10 for LLM Applications (1 hr)
+- **Goal end of week:** understand why inference is memory-bound, what
+  KV cache costs in VRAM, why batching matters, agent system anatomy
+
+### Week 4: Hands-On End-to-End
+- Hugging Face NLP Course chapters 1-3 (3-4 hrs)
+- Run Qwen 2.5 1.5B end-to-end in raw PyTorch on M4 Max (3 hrs)
+- Run the same model with vLLM on rented A100, benchmark the difference
+  (2 hrs, ~$10 cloud cost)
+- Skim one reasoning models paper (DeepSeek-R1 or o1 system card) (1 hr)
+- Write a 500-1000 word blog post explaining what you learned and why
+  the gap between naive and optimized inference exists (2-3 hrs)
+- **Goal end of week:** ready to start Milestone 1
+
+---
+
+## Self-Test Before Starting Milestone 1
+
+You're ready to start when you can answer these questions without
+looking anything up:
+
+1. What does the forward pass of a decoder-only transformer compute,
+   layer by layer?
+2. What is a KV cache, why does it exist, and what does it cost in VRAM?
+3. Why is LLM inference memory-bound, not compute-bound?
+4. What is tokenization, why does it matter, and how do BPE tokenizers
+   work?
+5. What's the difference between pretraining, supervised fine-tuning,
+   and RLHF?
+6. What does PagedAttention solve and why is it called "paged"?
+7. Why does batching dramatically increase GPU utilization?
+8. What's the difference between greedy decoding, sampling, and what
+   does temperature control?
+9. What's the basic anatomy of an LLM agent (loop, tools, state,
+   termination)?
+10. What's prompt injection and why is "input sanitization alone"
+    insufficient?
+11. What's the difference between training infra and inference infra,
+    and which one are you targeting and why?
+12. How do reasoning models (o1/o3/extended thinking) differ from
+    standard inference economically?
+
+If you can answer 10/12 confidently, you're ready. If you can only
+answer 6-7/12, repeat Week 2 and Week 3 before starting Milestone 1.
+
+---
+
+## Cost Estimate
+
+- Karpathy videos: free
+- 3Blue1Brown videos: free
+- Blog posts and papers: free
+- Hugging Face NLP Course: free
+- GPU rentals for Week 4 hands-on: ~$5-15 on Modal (small model, single
+  GPU, ~3-4 hours of runtime)
+
+**Total foundation cost: under $20 in cloud credits.**
+
+---
+
+## Honest Note on Pacing
+
+If after Week 2 you feel shaky on transformers and attention, take an
+extra week. Building the platform on confused fundamentals is worse than
+delaying the build by a week. The signal that you're ready isn't "I
+understand everything perfectly" — it's "I can read vLLM's scheduler
+code and follow what it's doing without getting lost." When you hit
+that bar, start Milestone 1.
