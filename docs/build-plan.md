@@ -193,6 +193,13 @@ internal jargon.
 - Air-gap mode, backup/restore, chaos test suite
 - Operator-grade packaging (Helm chart / K8s operator) for
   self-hosted deployment
+- Architecture diagrams auto-generated from the Helm chart and live
+  cluster state via [KubeDiagrams](https://github.com/philippemerle/KubeDiagrams).
+  CI runs `philippemerle/KubeDiagrams@main` on manifest changes;
+  generated SVGs land in `docs/diagrams/` and embed in `README.md`,
+  `docs/architecture.md`, and milestone reports. The kubectl plugin
+  (`kubectl diagrams`) is also used during dev to capture live
+  cluster topologies for incident write-ups.
 - **Roadblock:** chaos reveals deploy silently breaks 3 customers'
   reasoning workflows
 - Cloud GPU budget: ~$25
