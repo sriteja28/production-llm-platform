@@ -401,3 +401,32 @@ report, headline benchmark numbers, and the actual cloud GPU spend vs
 budget.
 
 _(empty — no milestones completed yet)_
+
+---
+
+## Post-Milestone 12 follow-ups
+
+Things to do after the M12 launch lands. Don't start any of these
+before M12 is published — they all gate on the launch.
+
+1. **Spin out `learning-foundations.md` as a separate repo** (e.g.,
+   `ai-infra-foundations`). After M12 ships, the curriculum has
+   lived experience baked in — refine it based on what actually
+   mattered vs what was wasted time, then publish as a standalone
+   shareable resource. Cross-link from the M12 flagship post:
+   "here's how I prepared for this work." Two repos owning two
+   distinct topics catches more recruiter SEO than one repo trying
+   to do both.
+
+2. **Spin out the productized platform as `spider` repo with
+   Apache-2.0.** See the licensing note in Milestone 11. The
+   portfolio repo `production-llm-platform` stays MIT and remains
+   the build journal; `spider` becomes the clean OSS Helm chart /
+   K8s operator that companies can adopt.
+
+3. **Submit `production-llm-platform` to DeepWiki.** Per the
+   `Diagrams and documentation` entry in CLAUDE.md, DeepWiki
+   submission is deferred until M12 launch so the auto-generated
+   wiki captures the substantive end state, not scaffolding. Add the
+   `[![Ask DeepWiki](https://deepwiki.com/badge.svg)]` badge to
+   README the day M12 publishes.
