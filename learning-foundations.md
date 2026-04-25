@@ -17,6 +17,76 @@ build.
 
 ---
 
+## Day 0 — Environment setup and reasoning-model smoke test
+
+Before starting Tier 1 reading, set up the dev environment you'll
+use for the full 4-week curriculum and all 12 milestones. Plan ~90
+minutes total. Doing this on Day 0 makes the abstract concepts in
+Week 1 concrete by giving you a working reasoning model on your own
+laptop.
+
+### Setup checklist (60 min)
+
+```bash
+# 1. Verify Python 3.11+
+python3 --version
+# If you don't have 3.11+:
+# brew install python@3.11
+
+# 2. Create the project venv (kept outside the repo)
+mkdir -p ~/.venv
+python3.11 -m venv ~/.venv/llm-platform
+source ~/.venv/llm-platform/bin/activate
+
+# 3. Install MLX-LM (the local reasoning-model backend on M4 Max)
+pip install --upgrade pip
+pip install mlx-lm jupyter
+
+# 4. Verify Apple Silicon Metal backend is active
+python -c "import mlx.core as mx; print('Metal OK:', mx.metal.is_available())"
+# Expected: Metal OK: True
+```
+
+If `Metal OK` is False, MLX won't use the GPU — debug before
+continuing. Most common cause: running under x86 Rosetta. Verify
+with `uname -m` (should be `arm64`).
+
+### First reasoning model smoke test (30 min)
+
+This is the "I generated a reasoning trace on my laptop" milestone.
+Worth doing before any reading — it makes the abstract concepts
+concrete.
+
+```bash
+# Downloads ~4.5 GB on first run
+python -c "
+from mlx_lm import load, generate
+model, tokenizer = load('mlx-community/DeepSeek-R1-Distill-Llama-8B-4bit')
+
+prompt = 'A factory makes 12 widgets per hour for 8 hours a day. How many widgets in a 5-day workweek? Think step by step.'
+response = generate(model, tokenizer, prompt=prompt, max_tokens=2000, verbose=True)
+print('---')
+print(response)
+"
+```
+
+What you'll see: the model emits a `<think>...</think>` block (the
+reasoning trace), then the final answer. Note the ratio of think-
+block tokens to final-answer tokens — that variable trace length is
+the workload your platform's scheduler in Milestone 2 has to handle
+gracefully.
+
+### Day 0 success criteria (must all be ✅ before Tier 1)
+
+- [ ] Python 3.11+ venv with MLX-LM working on Metal
+- [ ] Generated a reasoning trace from DeepSeek-R1-Distill-Llama-8B
+      on M4 Max
+- [ ] Modal account created with $50 credit (sign up at modal.com,
+      run `pip install modal && modal token new`)
+- [ ] vLLM Discord joined for lurking (https://discord.gg/jz7wjKhh6g)
+
+---
+
 ## Tier 1 — MUST DO (covers ~80% of the foundation)
 
 ### Andrej Karpathy — Neural Networks: Zero to Hero (YouTube, free)
@@ -343,6 +413,34 @@ looking anything up:
 
 If you can answer 10/12 confidently, you're ready. If you can only
 answer 6-7/12, repeat Week 2 and Week 3 before starting Milestone 1.
+
+---
+
+## Parallel community actions (start Week 1, not after Milestone 12)
+
+These are visibility multipliers — they compound while you learn,
+and at the senior-IC ($400K+) hire tier the project alone is
+necessary but not sufficient. Run these in parallel with foundations
+and the milestone build:
+
+- **vLLM Discord:** lurk 10-15 min/day in `#general`, `#help`, and
+  `#announcements`. By Week 3 you should know the regulars and the
+  active topics. Don't post yet — observe and learn the terminology.
+  By Milestone 2 (~week 6-7), start asking one well-formed question
+  per week and answering easier ones. By M4-M6, be a recognizable
+  handle.
+- **Modal account active from Day 0** so the CLI and credit are
+  ready when M1 cloud sessions start.
+- **Identify one upstream-contribution candidate during Tier 2
+  reading** (vLLM, SGLang, MLX-LM, or llm-d). Anything counts:
+  documentation typo, error-message clarification, missing example,
+  reproducible bug report. File during M1-M2.
+
+What to **NOT do during foundations:**
+- No Hashnode publication setup yet (gates on M1 readiness)
+- No blog posts (first post is the M1 report)
+- No applying to roles yet (apply at the M4 gate per the strategy
+  in `_private/docs/job-hunt-positioning.md`)
 
 ---
 

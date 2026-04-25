@@ -255,10 +255,12 @@ production-llm-platform/
 
 ### Pre-build checklist (verify once, before Milestone 1)
 
-- Foundations are done (`learning-foundations.md` self-test passes 10/12+)
-- M4 Max environment is set up (Python 3.11+, MLX-LM installed, can run
-  Qwen 2.5 3B locally)
-- Modal account created with $50+ credit
+- **Day 0 of `learning-foundations.md` complete** — Python 3.11+ venv
+  with MLX-LM working on Metal, DeepSeek-R1-Distill-Llama-8B (4-bit
+  MLX) generates reasoning traces locally, Modal account active with
+  $50 credit, vLLM Discord joined for lurking
+- Foundations curriculum complete (`learning-foundations.md`
+  self-test passes 10/12+)
 - GitHub repo initialized with proper `.gitignore`
 - This `CLAUDE.md` is in the repo root and committed
 
