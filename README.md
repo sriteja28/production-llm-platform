@@ -17,16 +17,17 @@ milestone plan, GPU budgets, and deliverables structure live in
 [docs/build-plan.md](./docs/build-plan.md). Milestone reports land in
 `milestones/MX/REPORT.md` as each milestone completes.
 
-## Anchor scenario
+## Anchor scenario — Spider
 
-A multi-tenant SaaS where lawyers run multi-step reasoning agents over
-firm-specific document libraries: variable-length reasoning traces, KV
-state persisting across hundreds of agent turns, per-firm LoRA
-adapters, SOC 2 compliance pressure, real cost economics. Every
-milestone builds features for this workload rather than generic
-synthetic benchmarks — the concrete, named workload is what makes the
-architecture choices defensible against open-source baselines like
-vLLM, SGLang, and llm-d.
+**Spider** is a multi-tenant Glean-style knowledge agent platform for
+internal teams. Each tenant is a company; agents reason across
+heterogeneous sources (Slack, Confluence, Drive, GitHub) with strict
+per-org ACL isolation, variable-length reasoning traces, and KV state
+persisting across hundreds of agent turns. Every milestone builds
+features for this workload rather than generic synthetic benchmarks —
+the concrete, named workload is what makes the architecture choices
+defensible against open-source baselines like vLLM, SGLang, and
+llm-d.
 
 ## Architecture
 

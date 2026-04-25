@@ -16,10 +16,11 @@ anchor: scheduling, caching, and cost control when output length is
 unpredictable (reasoning traces from 10 to 30,000+ tokens) and KV
 state persists across hundreds of agent turns. The platform spans
 inference, RAG, agents, evals, observability, and cost economics
-end-to-end across 12 milestones. Anchor scenario: a multi-tenant SaaS
-where lawyers run multi-step reasoning agents over firm-specific
-document libraries — per-firm LoRA adapters, SOC 2 compliance
-pressure, real cost economics.
+end-to-end across 12 milestones. Anchor scenario: **Spider** — a
+multi-tenant Glean-style knowledge agent platform for internal teams,
+where agents reason across heterogeneous sources (Slack, Confluence,
+Drive, GitHub) with per-org ACL isolation, per-org LoRA adapters
+tuned to each org's terminology and conventions.
 
 ---
 
@@ -36,14 +37,16 @@ pressure, real cost economics.
    recreating libraries.
 
 3. **Pick a specific realistic scenario to anchor the entire project.**
-   Default scenario: a multi-tenant SaaS where lawyers run multi-step
-   reasoning agents over firm-specific document libraries —
-   variable-length reasoning traces, KV state across hundreds of agent
-   turns, per-firm LoRA adapters, SOC 2 compliance pressure, real cost
-   economics. All milestones build features for this workload rather
-   than generic synthetic benchmarks. The concrete, named workload is
-   what makes architecture choices defensible against open-source
-   baselines (vLLM, SGLang, llm-d).
+   Default scenario: **Spider** — a multi-tenant Glean-style knowledge
+   agent platform for internal teams. Each tenant is a company; agents
+   reason across heterogeneous sources (Slack, Confluence, Drive,
+   GitHub) with per-org ACL isolation, variable-length reasoning
+   traces, KV state across hundreds of agent turns, and per-org LoRA
+   adapters tuned to each org's terminology and conventions. All
+   milestones build features for this workload rather than generic
+   synthetic benchmarks. The concrete, named workload is what makes
+   architecture choices defensible against open-source baselines
+   (vLLM, SGLang, llm-d).
 
 4. **Deliberately introduce production failures and debug them in
    public.** Each milestone has explicit "what kills this in production"

@@ -30,6 +30,51 @@ around them.
 
 ---
 
+## Anchor scenario: Spider
+
+**Spider** is a multi-tenant Glean-style knowledge agent platform for
+internal teams. Every milestone builds features for this workload
+rather than generic synthetic benchmarks.
+
+**Tenants:** organizations — each tenant is a company's instance,
+with its own data sources, permissions, and usage tier (3 enterprise,
+50 standard, 500 free).
+
+**Data sources per tenant:** heterogeneous mix of Slack, Confluence,
+Google Drive, GitHub, and internal wikis. Each source has its own ACL
+model (channel membership, doc permissions, repo access). Per-org
+isolation is strict: Org A cannot see Org B's data, ever.
+
+**Query types and distribution:**
+- 60% short Q&A (~200 input, ~100 output tokens) — "what does CTRP
+  stand for in our docs?"
+- 30% reasoning queries (~800 input, 5,000-15,000 output tokens
+  including reasoning trace) — "summarize the auth migration
+  decision and the tradeoffs we discussed"
+- 10% long-horizon agent queries (~1,500 input, 20,000-30,000 output
+  tokens plus 5-20 tool calls) — "what happened on Project Atlas
+  last sprint? Find the PRs, Slack discussions, and design docs"
+
+**Per-org LoRA adapters:** each org has its own fine-tune capturing
+their terminology, project naming conventions, code style, and
+internal jargon.
+
+**Why Spider stresses the technical anchor:**
+- *Variable trace length.* Reasoning queries produce 5x-30x more
+  output than short Q&A — head-of-line blocking under mixed workload
+  (M1-M2).
+- *KV state across turns.* Long-horizon agent queries make 5-20 tool
+  calls each, with KV state needing to persist across the full agent
+  loop (M3, M6).
+- *Per-org isolation.* ACL filtering during retrieval AND during
+  reasoning trace generation — leak prevention is non-trivial when
+  reasoning traces can cross-reference content (M5, M7).
+- *Multi-source heterogeneous retrieval.* Mixed signals (recency,
+  semantic, keyword, author/permission filters) across sources with
+  different schemas — RAG at production scale (M5).
+
+---
+
 ## Incremental build plan — 12 milestones across 4 phases
 
 ### Phase 1 — Inference foundation (Milestones 1-4)
@@ -69,7 +114,7 @@ around them.
 
 **Milestone 4: Prefill/decode disaggregation + multi-LoRA + reasoning-aware speculative decoding**
 - Separate prefill/decode workers, S-LoRA-style serving
-- 200 LoRAs (one per tenant firm) plus speculative decoder draft
+- 200 LoRAs (one per tenant org) plus speculative decoder draft
   models
 - **Roadblock:** speculative decoder degrades catastrophically on
   reasoning chains (drafts can't predict reasoning steps); prefill
@@ -78,31 +123,37 @@ around them.
 
 ### Phase 2 — Application layer (Milestones 5-7)
 
-**Milestone 5: Production RAG pipeline with reasoning-aware retrieval**
-- Document ingestion, chunking strategies, hybrid retrieval (vector +
-  BM25)
-- Per-tenant document isolation (Firm A cannot see Firm B docs)
+**Milestone 5: Production RAG pipeline with multi-source retrieval and ACL isolation**
+- Heterogeneous source ingestion (Slack, Confluence, Drive, GitHub,
+  wikis), chunking strategies, hybrid retrieval (vector + BM25 +
+  recency + author/permission filters)
+- Strict per-org ACL isolation enforced at retrieval (Org A cannot
+  see Org B's data; within Org A, channel/doc/repo permissions are
+  honored)
 - Reasoning-aware retrieval: when does the agent reason vs retrieve?
-- **Roadblock:** 100K-page corpora cause retrieval misses + permission
-  leaks; reasoning agent over-fetches and burns tokens
+- **Roadblock:** 100K-document heterogeneous corpora cause retrieval
+  misses + ACL leaks across sources; reasoning agent over-fetches and
+  burns tokens
 - Cloud GPU budget: ~$10
 
 **Milestone 6: Multi-turn agent orchestration with KV-cache-aware tool execution**
 - LangGraph-based agent loop with planning, tool calls, recovery
-- Customer agent: "find every contract expiring in Q2 and draft
-  renewal notices" (multi-step reasoning over firm corpus)
+- Customer agent: "what happened on Project Atlas last sprint?
+  Find the PRs, Slack discussions, and design docs" (multi-step
+  reasoning across heterogeneous sources)
 - KV state persists across agent turns; tool-call boundaries used as
   natural cache breakpoints (DualPath-style hierarchical KV management)
 - **Roadblock:** stuck reasoning loops ($40 bills), hallucinated
-  clauses, KV-cache thrash under multi-agent deadlock
+  cross-source claims, KV-cache thrash under multi-agent deadlock
 - Cloud GPU budget: ~$15
 
 **Milestone 7: Structured outputs + reasoning-trace auditing + guardrails**
 - Grammar-constrained decoding, prompt injection defense (including
   injection in reasoning traces)
 - Confidence scoring, reasoning-step audit logs, red-team testing
-- **Roadblock:** jailbreak exfiltrates other firm's confidential info
-  via reasoning-trace leakage
+- **Roadblock:** jailbreak exfiltrates another org's internal data
+  via reasoning-trace leakage (e.g., reasoning trace cites a doc
+  the user shouldn't have access to)
 - Cloud GPU budget: ~$15
 
 ### Phase 3 — Reliability and operations (Milestones 8-10)
@@ -166,10 +217,12 @@ speculative decoding tuned for reasoning chains. Benchmark data
 demonstrates each decision against a documented alternative.
 
 **Phase 2 complete when:** the platform serves a complete enterprise
-reasoning-agent workflow end-to-end — a law firm ingests documents, an
-agent runs multi-step reasoning over them with strict per-tenant
-isolation, tool calls execute against the firm corpus without leaking,
-and reasoning-trace auditing catches injection attempts.
+reasoning-agent workflow end-to-end — an org ingests heterogeneous
+source data (Slack, Confluence, Drive, GitHub), an agent runs
+multi-step reasoning across them with strict per-org and per-source
+ACL isolation, tool calls execute without leaking cross-org or
+cross-permission data, and reasoning-trace auditing catches injection
+attempts.
 
 **Phase 3 complete when:** every production failure mode introduced in
 M1-M7 is observable from reasoning + tool-call traces, debuggable
