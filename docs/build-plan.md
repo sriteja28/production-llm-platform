@@ -191,9 +191,18 @@ internal jargon.
 **Milestone 11: Multi-region, deployment safety, chaos engineering**
 - Blue-green for models, canary rollouts, multi-region failover
 - Air-gap mode, backup/restore, chaos test suite
+- Operator-grade packaging (Helm chart / K8s operator) for
+  self-hosted deployment
 - **Roadblock:** chaos reveals deploy silently breaks 3 customers'
   reasoning workflows
 - Cloud GPU budget: ~$25
+- **Note on licensing for the spinout.** When packaging is spun out as
+  a separate `spider` open-source repo (productized Helm chart / K8s
+  operator), license it under **Apache-2.0** rather than MIT.
+  Apache-2.0 is the AI-infrastructure ecosystem norm (vLLM, SGLang,
+  MLX, llm-d, Kubernetes — all Apache-2.0) and its explicit patent
+  grant matters once a project is being productized for adoption. The
+  portfolio repo `production-llm-platform` stays MIT.
 
 **Milestone 12: The flagship benchmark + writeup + launch**
 - Comprehensive benchmark of reasoning-aware serving vs vLLM and
