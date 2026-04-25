@@ -1,7 +1,6 @@
 # production-llm-platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/sriteja28/production-llm-platform)
 
 A multi-tenant LLM serving platform built for reasoning-and-agent
 workloads — scheduling, caching, and cost control when output length

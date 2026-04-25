@@ -118,11 +118,17 @@ tuned to each org's terminology and conventions.
   - [**Structurizr**](https://structurizr.com/) (C4 model) for
     high-level architecture documentation in `docs/architecture.md`
     when the system is mature enough to warrant it (Milestone 11+).
-  - [**DeepWiki by Cognition**](https://deepwiki.com/sriteja28/production-llm-platform)
-    for auto-generated repo wiki with architecture diagrams, module
-    explanations, dependency maps, and ask-the-codebase chat. Free
-    surface area for hiring managers — submitted at repo creation,
-    re-indexed automatically as the codebase grows. Badge in README.
+  - [**DeepWiki by Cognition**](https://deepwiki.com) for
+    auto-generated repo wiki with architecture diagrams, module
+    explanations, dependency maps, and ask-the-codebase chat.
+    **Submission deferred to Milestone 12** (end of build). Rationale:
+    DeepWiki crawls current state — submitting during scaffolding or
+    mid-build surfaces an early-stage repo to hiring managers
+    clicking the badge. After M12, when the architecture is
+    substantive and benchmarks are published, DeepWiki's
+    auto-generated wiki becomes a high-signal surface area. Add
+    `[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/sriteja28/production-llm-platform)`
+    to README the day M12 launches.
 - **Primary dev machine:** MacBook Pro M4 Max with substantial unified
   RAM. Used for ~70% of all work — orchestration, RAG, agents, evals,
   dashboards, integration tests, debugging. MLX-LM serves smaller
