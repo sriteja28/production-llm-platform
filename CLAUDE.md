@@ -122,19 +122,63 @@ and **doc maintenance cadence**, see
 
 ```
 production-llm-platform/
-├── README.md                      # 90-second orientation for any reader
-├── CLAUDE.md                      # This file — stable project context
-├── learning-foundations.md        # 4-week pre-build curriculum + self-test
+├── README.md                            # 90-second orientation for any reader
+├── CLAUDE.md                            # This file — stable project context
+├── LICENSE                              # MIT
+├── learning-foundations.md              # 4-week pre-build curriculum + self-test
 ├── .gitignore
+├── .env.example                         # Env var names (values go in .env, gitignored)
+├── .mcp.json                            # MCP server config (empty by default; templates in .claude/mcp/)
 ├── .claude/
-│   ├── settings.json              # Project-shared permissions + hooks
-│   └── agents/                    # Custom subagents (e.g., milestone-scaffolder)
+│   ├── settings.json                    # Project-shared permissions + Stop hook
+│   ├── agents/
+│   │   └── milestone-scaffolder.md      # Phase A scaffolding subagent
+│   ├── commands/
+│   │   ├── README.md                    # Slash-command index + add-new instructions
+│   │   ├── scaffold-milestone.md        # /scaffold-milestone <N>
+│   │   ├── cloud-runbook.md             # /cloud-runbook <context>
+│   │   └── check-conventions.md         # /check-conventions <M>
+│   └── mcp/
+│       └── templates.md                 # Copy-pasteable templates for common MCP servers
 ├── docs/
-│   ├── build-plan.md              # 12-milestone plan, GPU budgets, deliverables
-│   └── conventions.md             # Detailed tooling, anchor papers, conventions
-├── adr/                           # Architecture decision records (MX-*.md)
-├── milestones/                    # M1-M12 build artifacts (PLAN.md, REPORT.md)
-└── content/posts/                 # Incremental blog post drafts
+│   ├── README.md                        # Doc directory placeholder + expected contents
+│   ├── build-plan.md                    # 12-milestone plan, GPU budgets, deliverables
+│   └── conventions.md                   # Detailed tooling, anchor papers, conventions, doc cadence
+├── adr/                                 # Architecture decision records (MX-*.md)
+├── milestones/                          # M1-M12 build artifacts (PLAN.md, REPORT.md per milestone)
+└── content/posts/                       # Incremental blog post drafts (milestone-MX.md)
+```
+
+User-local (gitignored, not visible in clones):
+```
+├── .env                                 # Actual env var values (referenced by .mcp.json)
+├── .claude/settings.local.json          # User-local override of settings.json
+├── .claude/cache/  .claude/state/       # Claude Code runtime state
+├── _private/                            # Strategic / personal-positioning docs
+│   ├── docs/                            # job-hunt-positioning, research-reality,
+│   │                                    # realistic-outcome-assessment, anchor-research,
+│   │                                    # milestone-audit, publishing-plan,
+│   │                                    # keeping-current, learning-anchors,
+│   │                                    # profile-readme templates
+│   ├── milestones/M1-plan-draft.md
+│   ├── gtm/gtm-prompt.md
+│   └── targets/aicompass.md
+```
+
+Persistent memory (Claude Code, user-local):
+```
+~/.claude/projects/-Users-sri-projects-production-llm-platform/memory/
+├── MEMORY.md                            # Index
+├── user_profile.md                      # Sriteja's role, identity, framing
+├── user_communication.md                # Communication style preferences
+├── feedback_no_pivoting_framing.md      # Never use "pivoting" or defensive identity
+├── feedback_no_comp_on_public_repo.md   # No comp/runway/location on project README
+├── feedback_no_emojis_in_repo.md        # No emojis in repo (profile README is the exception)
+├── feedback_defer_publishing.md         # Hashnode pub / DeepWiki / Writing section gate on M1
+├── project_anchor_and_scenario.md       # Reasoning + agent + Spider scenario
+├── project_milestone_status.md          # Pre-foundations; Day 0 tomorrow; M1 ~May 24
+├── project_repos.md                     # production-llm-platform, sriteja28, eks-three-tier-aws-infra; future spider
+└── reference_private_docs.md            # Index of _private/docs/ for read-not-rederive
 ```
 
 ---

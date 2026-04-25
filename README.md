@@ -49,10 +49,13 @@ harness is functional.)_
 ```
 production-llm-platform/
 ├── docs/
-│   └── build-plan.md            # 12-milestone plan, GPU budgets, deliverables
+│   ├── build-plan.md            # 12-milestone plan, GPU budgets, deliverables
+│   └── conventions.md           # Detailed tooling, anchor papers, cross-cutting conventions
 ├── milestones/                  # M1-M12 build artifacts (PLAN.md, REPORT.md)
 ├── adr/                         # Architecture decision records
 ├── content/posts/               # Incremental blog posts
+├── .claude/                     # Claude Code project setup (settings, custom agents, slash commands)
+├── .mcp.json                    # MCP server config (empty by default; templates in .claude/mcp/)
 ├── CLAUDE.md                    # Claude Code session context
 └── learning-foundations.md      # Pre-build curriculum and self-test
 ```
