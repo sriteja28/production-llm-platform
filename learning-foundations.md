@@ -77,6 +77,32 @@ every modern LLM is).
 
 URL: https://jalammar.github.io/illustrated-gpt2/
 
+### DeepSeek-R1 paper
+
+The defining 2025 paper on training reasoning models via RL on
+chain-of-thought. Reasoning-and-agent inference economics is the
+project's technical anchor — this paper is the prerequisite.
+
+Read Section 2 (training pipeline) and Section 3 (R1-Zero RL setup)
+deeply. Section 4 (R1-Distill variants) explains why we use
+DeepSeek-R1-Distill-Llama-8B for local dev — these are the models
+that fit on an M4 Max and are MLX-LM compatible.
+
+Title: "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via
+Reinforcement Learning"
+URL: https://arxiv.org/abs/2501.12948
+
+### Qwen3 thinking mode documentation
+
+Qwen3 introduced switchable thinking mode (via `/think` and
+`/no_think` prompt directives). You'll need to understand this for M1
+benchmark fairness (mixing thinking-on and thinking-off requests
+realistically) and for M2 budget enforcement (capping thinking
+tokens per tier).
+
+URL: https://qwen.readthedocs.io/en/latest/inference/chat.html
+(skim sections on thinking mode and `enable_thinking`)
+
 ---
 
 ## Tier 2 — SHOULD DO (the next 15%)
@@ -142,6 +168,34 @@ data poisoning, output leakage, etc.
 
 URL: https://owasp.org/www-project-top-10-for-large-language-model-applications/
 
+### vLLM reasoning_outputs documentation
+
+How vLLM serves reasoning models in production: `--reasoning-parser`
+flag, supported parsers (`deepseek_r1`, `qwen3`, `granite`), thinking
+budget control, streaming reasoning vs final-answer separation, and
+the constraint that reasoning is **online-serving only** (chat
+completions endpoint, not raw `/v1/completions`).
+
+This determines how the M1 benchmark harness has to be structured —
+the harness must use the OpenAI-compatible chat client, not raw
+generate calls.
+
+URL: https://docs.vllm.ai/en/latest/features/reasoning_outputs/
+
+### DeepSeek DualPath paper (Feb 2026)
+
+The 2026 paper that establishes KV-cache I/O — not compute — as the
+bottleneck in long-horizon agent workloads. Foundational reading for
+M6 (agent orchestration) and M3 (KV cache hierarchy). The DualPath
+storage-to-decode loading approach is the architectural pattern M6
+will fold in.
+
+Skim Section 3 (the KV-I/O analysis) and Section 4 (the dual-path
+mechanism). Don't try to reproduce; read for the architectural
+intuition.
+
+URL: https://arxiv.org/abs/2602.21548
+
 ---
 
 ## Tier 3 — REFERENCE MATERIAL (read when relevant, not now)
@@ -164,17 +218,6 @@ URL: https://arxiv.org/abs/2005.14165
 Skim. Understand the concept of RLHF, don't memorize details.
 
 URL: https://arxiv.org/abs/2203.02155
-
-### Reasoning models / test-time compute
-
-The shift to o1/o3/Claude extended thinking models has changed inference
-economics in 2026. Important for any production system that has to
-budget for reasoning workloads.
-
-Read at minimum (1-2 hours):
-- OpenAI's o1 system card (intuition only)
-- DeepSeek-R1 paper (skim Section 3 for chain-of-thought training intuition)
-- One blog post on speculative decoding's relationship to reasoning
 
 ### Anthropic published research
 
@@ -253,14 +296,21 @@ and background. Skip them.
 - **Goal end of week:** understand why inference is memory-bound, what
   KV cache costs in VRAM, why batching matters, agent system anatomy
 
-### Week 4: Hands-On End-to-End
+### Week 4: Hands-On End-to-End (reasoning-aware)
 - Hugging Face NLP Course chapters 1-3 (3-4 hrs)
-- Run Qwen 2.5 1.5B end-to-end in raw PyTorch on M4 Max (3 hrs)
-- Run the same model with vLLM on rented A100, benchmark the difference
-  (2 hrs, ~$10 cloud cost)
-- Skim one reasoning models paper (DeepSeek-R1 or o1 system card) (1 hr)
-- Write a 500-1000 word blog post explaining what you learned and why
-  the gap between naive and optimized inference exists (2-3 hrs)
+- Run DeepSeek-R1-Distill-Llama-8B (4-bit MLX) end-to-end on M4 Max
+  via mlx_lm — generate reasoning traces, observe trace length
+  variance across questions (3 hrs)
+- Run the same model with vLLM `--reasoning-parser deepseek_r1` on
+  rented A100, benchmark thinking vs non-thinking throughput
+  (2 hrs, ~$10 cloud cost). Use the OpenAI-compatible chat
+  completions endpoint (not raw `/completions` — vLLM reasoning is
+  online-only).
+- Read the DualPath paper Section 3 for KV-I/O intuition (1 hr)
+- Write a 500-1000 word notes file (NOT yet a public blog post —
+  see `_private/docs/publishing-plan.md`) explaining what you learned
+  about reasoning trace variance and why it breaks naive batching
+  (2-3 hrs)
 - **Goal end of week:** ready to start Milestone 1
 
 ---
