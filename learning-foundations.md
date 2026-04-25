@@ -500,6 +500,78 @@ What to **NOT do during foundations:**
 
 ---
 
+## After foundations: keeping current
+
+The field moves fast. Once foundations are complete and the build
+starts, sustained currency matters — but the goal is **maximum
+signal per minute**, not maximum coverage. 30 minutes/week of
+structured review beats 2 hours/day of feed scrolling.
+
+The principle: subscribe to **fewer high-signal sources, not more
+low-signal ones**. A source is worth keeping only if it forces you
+to update a mental model. If it only confirms what you already
+think, drop it.
+
+### Daily (10-15 min, optional)
+
+- [**AI News by Smol AI**](https://news.smol.ai/) — Karpathy-endorsed
+  daily digest of AI Discord / Reddit / X discussions. Insiders call
+  it "the highest-leverage 45 minutes" of their day.
+- [**HuggingFace Daily Papers**](https://huggingface.co/papers) —
+  community-upvoted papers; chat-with-paper feature for fast
+  intuition.
+
+### Weekly (30-45 min — pick 2-3 from this list, more dilutes)
+
+- [**Latent Space**](https://www.latent.space/) — Swyx + Alessio,
+  AI engineers for AI engineers. Infrastructure-heavy. Highest
+  signal-to-noise for inference / serving work.
+- [**SemiAnalysis**](https://www.semianalysis.com/) — Dylan Patel.
+  Hardware + datacenter + serving economics.
+- [**TheSequence**](https://thesequence.substack.com/) — twice-weekly
+  ML / LLM systems design deep dives. 160K+ subscribers.
+- [**Ahead of AI**](https://magazine.sebastianraschka.com/) —
+  Sebastian Raschka. Fundamentals + paper roundups.
+- [**Interconnects**](https://www.interconnects.ai/) — Nathan
+  Lambert. Open-model + RLHF + reasoning models.
+
+### Real-time passive
+
+- vLLM Discord, SGLang community, llm-d community — lurk daily.
+- X / Twitter **List** (NOT main feed) of 10-12 specific
+  practitioners.
+
+### Weekly review structure (30 min, Sunday)
+
+1. **Triage (5 min)** — scan AI News and HF Daily Papers; note
+   2-3 items relevant to current focus area.
+2. **Deep dive (15 min)** — read one Weekly newsletter, matched
+   to current focus (infrastructure / RAG / observability /
+   deployment / benchmarks).
+3. **Capture (5 min)** — in a personal log: 1 insight, 1 bookmark,
+   1 question to answer by next Sunday.
+4. **Act (5 min)** — if anything changes your current build's
+   approach, update plans immediately rather than waiting for the
+   relevant phase.
+
+### What to NOT subscribe to
+
+Daily celebrity-AI newsletters (The Rundown, Superhuman, Ben's
+Bites — wide audience, low technical depth), general-purpose tech
+podcasts (Lex Fridman, MLST except specific episodes), Twitter main
+feed (use Lists exclusively), most YouTube AI tutorial channels
+(Karpathy is the exception, not the rule), Substack
+productivity-AI newsletters.
+
+### Quarterly source-list refresh
+
+The signal-to-noise ratio of any source decays. Every quarter:
+drop sources that haven't surfaced one specific useful insight in
+the last 8 weeks; add at most one. The list should be smaller and
+sharper after a year, not larger.
+
+---
+
 ## Cost Estimate
 
 - Karpathy videos: free
