@@ -4,9 +4,11 @@ Project documentation that's not milestone-specific or ADR-specific.
 
 ## Expected contents (created during the build)
 
-- `scenario.md` — the multi-tenant law firm SaaS scenario that anchors
-  the entire project (concrete customer, concrete data, concrete
-  constraints)
+- `scenario.md` — the Spider scenario (multi-tenant Glean-style
+  knowledge agent for internal teams) that anchors the entire project,
+  with workload model, tenant tiers, source mix, and ACL details.
+  (Also currently captured inline in `build-plan.md` under "Anchor
+  scenario: Spider".)
 - `architecture.md` — overall system architecture diagram and component
   responsibilities
 - `local-development.md` — M4 Max setup guide for MLX-LM
