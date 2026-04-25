@@ -191,6 +191,15 @@ these patterns by default in every session:
    long-running tasks). User-local overrides go in
    `.claude/settings.local.json` (gitignored).
 
+   **MCP servers.** `.mcp.json` at the repo root configures
+   project-shared MCP servers (currently empty by design — the
+   default for this project is no MCP servers until a specific
+   need surfaces). Templates for common servers (filesystem,
+   GitHub, HuggingFace, Postgres, Sentry, Slack) are at
+   `.claude/mcp/templates.md`. Secrets reference env vars via
+   `${VAR}` syntax; actual values go in `.env` (gitignored, see
+   `.env.example`).
+
 7. **Web verification.** Before citing tools, papers, or libraries
    that aren't already in `docs/conventions.md`, verify with
    WebSearch / WebFetch. Don't rely solely on training data — the

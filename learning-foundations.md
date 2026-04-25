@@ -124,7 +124,16 @@ use them every day for the next 6 months.
    Stop hook that fires a macOS notification when long-running
    tasks complete.
 
-7. **Web verification.** Claude has WebSearch and WebFetch tools.
+7. **MCP servers (optional, currently none active).** `.mcp.json`
+   at the repo root configures project-shared MCP servers. The
+   default is empty — the project doesn't need any until a specific
+   need surfaces. Templates for common servers (filesystem,
+   GitHub, HuggingFace, Postgres, Sentry, Slack) are pre-staged at
+   `.claude/mcp/templates.md` so adding one later is copy-paste +
+   set the env var. Secrets go in `.env` (gitignored — see
+   `.env.example`).
+
+8. **Web verification.** Claude has WebSearch and WebFetch tools.
    For AI infrastructure work specifically, the field moves fast —
    April 2026 SOTA differs from January 2026 SOTA. Verify
    tool / paper / library claims with the web before citing in
