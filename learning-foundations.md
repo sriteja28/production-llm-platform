@@ -73,6 +73,105 @@ answer for reasoning + agent workloads.
 
 ---
 
+## Prerequisite — Understanding Claude Code
+
+This curriculum and the production-llm-platform build assume you're
+using [Claude Code](https://claude.ai/code) (Anthropic's CLI-based
+agentic coding tool) as your primary AI coding assistant. Spend
+~30 minutes before Day 0 understanding the patterns below; you'll
+use them every day for the next 6 months.
+
+### What to understand
+
+1. **`CLAUDE.md` auto-loading.** Claude Code reads the file at the
+   repo root on every session. It defines stable project context.
+   For this project, see [CLAUDE.md](./CLAUDE.md) — note the
+   "Claude Code session protocol (best practices for this repo)"
+   section codifying the patterns used in this build.
+
+2. **Subagents (the `Agent` tool).** Claude can spawn specialized
+   subagents for research, parallel work, or codebase exploration.
+   Each subagent runs in its own context, returning a summary —
+   keeps the main session focused. This project ships a custom
+   `milestone-scaffolder` subagent at
+   `.claude/agents/milestone-scaffolder.md` for Phase A work.
+
+3. **Slash commands.** Reusable command shortcuts. Project-level
+   commands live in `.claude/commands/`; built-in skills
+   (`/schedule`, `/init`, `/review`, etc.) are also available.
+   Project commands defined here:
+   - `/scaffold-milestone <N>` — Phase A scaffolding for milestone N
+   - `/cloud-runbook <context>` — write a pre-flight runbook before
+     any cloud GPU session (required before starting the meter)
+   - `/check-conventions <M>` — verify milestone M follows the
+     cross-cutting conventions in `docs/conventions.md`
+
+4. **Plan mode.** For complex multi-step implementations, use Plan
+   mode (or this project's Phase A protocol). Reach alignment
+   before writing code; never dive into multi-file changes without
+   a design discussion first.
+
+5. **Memory.** Persistent context at
+   `~/.claude/projects/<repo-hash>/memory/`. Claude writes
+   user / feedback / project / reference memories that compound
+   across sessions. Read the `MEMORY.md` index at the start of
+   each session if you've been away for more than a few days.
+
+6. **Hooks and permissions.** Defined in `.claude/settings.json`.
+   Permissions allowlist common read-only operations (git, gh, ls,
+   etc.) to reduce permission prompts. Hooks fire on events
+   (pre / post-tool-use, session stop, etc.). This project has a
+   Stop hook that fires a macOS notification when long-running
+   tasks complete.
+
+7. **Web verification.** Claude has WebSearch and WebFetch tools.
+   For AI infrastructure work specifically, the field moves fast —
+   April 2026 SOTA differs from January 2026 SOTA. Verify
+   tool / paper / library claims with the web before citing in
+   code or docs. Don't let Claude cite training-data hallucinations.
+
+### Best practices for this build
+
+- Read `CLAUDE.md` and `docs/conventions.md` before any session
+  where context might matter
+- When asking Claude to implement something complex, ask for the
+  plan first ("walk me through the design before implementing")
+- Use the `milestone-scaffolder` subagent at every Phase A kickoff
+  (via `/scaffold-milestone N`) rather than freehand prompting —
+  keeps Phase A consistent across all 12 milestones
+- Tell Claude to verify SOTA tool / paper claims with WebSearch
+  before citing them in your code or docs
+- Authorize destructive operations (force pushes, history rewrites,
+  file deletions) explicitly — Claude will ask, but be aware it's
+  asking for a reason
+- Pull from `_private/milestones/M1-plan-draft.md` at M1 kickoff
+  via `/scaffold-milestone 1`
+
+### Resources
+
+- Claude Code docs: https://docs.claude.com/en/docs/claude-code
+- This project's session protocol: see "Claude Code session
+  protocol" in [CLAUDE.md](./CLAUDE.md)
+- Project commands list: [.claude/commands/README.md](./.claude/commands/README.md)
+- Project subagents list: [.claude/agents/](./.claude/agents/)
+
+### If you're using a different AI coding assistant
+
+The patterns above are Claude-Code-specific in their wiring but
+mostly portable. If you're on Cursor, Continue, Cline, Aider, etc.:
+
+- The "auto-loaded project context" pattern works in Cursor via
+  `.cursorrules` and Continue via `.continuerc`
+- The "Phase A → B → C protocol" works regardless of tool — just
+  enforce alignment before code
+- The memory pattern requires manual notes (e.g., a personal
+  `notes.md`) if your tool doesn't have persistent memory
+- Custom subagents and slash commands have varying support;
+  freehand prompting against this project's CLAUDE.md and
+  conventions.md gets you ~80% of the value
+
+---
+
 ## Day 0 — Environment setup and reasoning-model smoke test
 
 Before starting Tier 1 reading, set up the dev environment you'll
