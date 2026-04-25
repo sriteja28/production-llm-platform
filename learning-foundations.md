@@ -139,6 +139,73 @@ use them every day for the next 6 months.
    tool / paper / library claims with the web before citing in
    code or docs. Don't let Claude cite training-data hallucinations.
 
+### Project file layout (Claude Code perspective)
+
+How everything wires together in this repo. Adopters of this
+curriculum can mirror this layout in their own AI-infra builds.
+
+```
+production-llm-platform/
+├── README.md                            # 90-second orientation for any reader
+├── CLAUDE.md                            # Auto-loaded project context for Claude
+├── LICENSE                              # MIT
+├── learning-foundations.md              # This curriculum (4 weeks pre-build)
+├── .gitignore
+├── .env.example                         # Env var names (values go in .env, gitignored)
+├── .mcp.json                            # MCP server config (empty by default)
+├── .claude/
+│   ├── settings.json                    # Project-shared permissions + Stop hook
+│   ├── agents/
+│   │   └── milestone-scaffolder.md      # Phase A scaffolding subagent
+│   ├── commands/
+│   │   ├── README.md                    # Slash-command index + add-new instructions
+│   │   ├── scaffold-milestone.md        # /scaffold-milestone <N>
+│   │   ├── cloud-runbook.md             # /cloud-runbook <context>
+│   │   └── check-conventions.md         # /check-conventions <M>
+│   └── mcp/
+│       └── templates.md                 # Copy-pasteable MCP server templates
+├── docs/
+│   ├── build-plan.md                    # 12-milestone plan, GPU budgets, deliverables
+│   └── conventions.md                   # Detailed tooling, anchor papers, conventions
+├── adr/                                 # Architecture decision records (MX-*.md)
+├── milestones/                          # M1-M12 build artifacts (PLAN.md, REPORT.md)
+└── content/posts/                       # Incremental blog post drafts
+```
+
+User-local content (gitignored, mirror this pattern with your own
+personal context):
+
+```
+├── .env                                 # Actual env var values (referenced by .mcp.json)
+├── .claude/settings.local.json          # User-local override of settings.json
+├── .claude/cache/  .claude/state/       # Claude Code runtime state
+└── _private/                            # Strategic / personal-positioning docs
+    ├── docs/                            # job-hunt strategy, research notes,
+    │                                    # publishing plan, realistic outcome,
+    │                                    # profile-readme templates, etc.
+    ├── milestones/                      # Pre-staged milestone PLAN.md drafts
+    ├── gtm/                             # Go-to-market prompts
+    └── targets/                         # Company targeting prompts
+```
+
+Persistent Claude Code memory (user-local, compounds across
+sessions):
+
+```
+~/.claude/projects/<repo-hash>/memory/
+├── MEMORY.md                            # Index loaded by Claude on every session
+├── user_*.md                            # User profile, communication style
+├── feedback_*.md                        # Corrections that should compound
+├── project_*.md                         # Anchor scenario, milestone status, repos
+└── reference_*.md                       # Pointers to gitignored content
+```
+
+The three layers map to three audiences: the **public repo** is
+what hiring managers and adopters see; the **user-local
+gitignored content** is your personal operational context (strategy,
+positioning, drafts); the **memory directory** is Claude's
+persistent context that survives across sessions and weeks.
+
 ### Best practices for this build
 
 - Read `CLAUDE.md` and `docs/conventions.md` before any session
