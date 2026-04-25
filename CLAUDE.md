@@ -80,9 +80,29 @@ tuned to each org's terminology and conventions.
   Both sit behind a pluggable interface so the rest of the platform is
   backend-agnostic.
 - **Vector DB:** Qdrant or pgvector (decision deferred to Milestone 5).
-- **Observability:** OpenTelemetry + Prometheus + structured logging
-  with `structlog`. ClickHouse for request analytics.
-- **Agents:** LangGraph for the agent loop (Milestone 6).
+- **Retrieval (Milestone 5):** BM25 + dense embeddings + RRF fusion
+  (k=60) + cross-encoder reranker (bge-reranker-v2 local /
+  Cohere Rerank 3.5 cloud). Glean-style ACL filtering — post-
+  retrieval, pre-context-assembly.
+- **Observability:** OpenTelemetry GenAI semconv (experimental,
+  dual-emit via `OTEL_SEMCONV_STABILITY_OPT_IN`) instrumented via
+  **OpenLLMetry** (Traceloop), with **Langfuse** as the default
+  backend; **Phoenix Span Replay** for deterministic replay (M8).
+  Prometheus + `structlog` for non-LLM signals. Wired from M1
+  (basic spans) — full coverage at M8.
+- **Agents (Milestone 6):** **LangGraph** for state/flow + **Pydantic
+  AI** for typed tool I/O inside nodes.
+- **Structured outputs (Milestone 7):** **xgrammar** (vLLM v1 default,
+  ~100x faster than Outlines via vocab partitioning).
+- **Evals (Milestone 9):** three-layer split — **Inspect AI**
+  (model-layer capability/safety), **DeepEval** (pytest-style app-
+  layer), **Ragas** (retrieval). Reasoning-model-as-judge with
+  binary pass/fail rubric (Hamel Husain doctrine).
+- **Cost / routing (Milestone 10):** **RouteLLM**-style router +
+  **Portkey**-style gateway; **OpenRouter** as marketplace reference.
+- **Deployment (Milestone 11):** **KServe LLMInferenceService CRD +
+  llm-d** backend (both CNCF), **Knative** for autoscaling,
+  **LitmusChaos** for chaos suite.
 - **Diagrams:** [KubeDiagrams](https://github.com/philippemerle/KubeDiagrams)
   for auto-generated K8s architecture diagrams from manifests, Helm
   charts, and live cluster state. Used from Milestone 11 onwards
@@ -99,6 +119,47 @@ tuned to each org's terminology and conventions.
   full-scale multi-LoRA, prefill/decode disaggregation, the flagship
   benchmark.
 - **Total cloud GPU budget across all 12 milestones: under $400.**
+
+---
+
+## Anchor papers and projects (2026)
+
+The following are referenced by short name across milestones — name
+them, don't paraphrase. They are the 2026 reasoning-and-agent
+infrastructure stack.
+
+**Anchor papers:**
+- **DualPath** (DeepSeek, Feb 2026) — KV-cache I/O bottleneck in
+  long-horizon agent workloads
+- **EAGLE-3** (NeurIPS 2025) — current SOTA token-level speculative
+  decoding
+- **Lookahead Reasoning** (NeurIPS 2025) — step-level draft+verify
+  for reasoning chains
+- **SpecReason** (Apr 2025) — selective small-model offload for easy
+  reasoning steps
+- **PagedAttention** (vLLM original) — KV cache fragmentation
+  solution
+- **FlashAttention** — IO-aware attention algorithm (intuition only)
+- **RadixAttention** (SGLang) — radix-tree prefix cache
+- **S-LoRA** — multi-LoRA serving (paper); production stack uses
+  vLLM Punica/SGMV kernels
+- **Sarathi-Serve** (OSDI 2024) — chunked prefill (alternative to
+  full P/D disaggregation)
+
+**Anchor projects:**
+- **vLLM v1** + Punica/SGMV multi-LoRA + Reasoning Budget feature
+- **SGLang** + RadixAttention
+- **llm-d** (CNCF sandbox, March 2026) — distributed inference
+  scheduler with tiered prefix cache
+- **KServe** (CNCF incubating, Nov 2025) — LLMInferenceService CRD
+- **LMCache** — KV offload layer
+- **xgrammar** — structured output (vLLM v1 default)
+- **LangGraph + Pydantic AI** — agent state + typed tools
+- **Inspect AI / DeepEval / Ragas** — eval layers
+- **OpenLLMetry / Langfuse / Arize Phoenix** — LLM observability
+- **LitmusChaos** — CNCF chaos engineering
+- **RouteLLM / Portkey / OpenRouter** — routing + gateways
+- **KubeDiagrams** — auto-generated K8s architecture diagrams
 
 ---
 
@@ -119,6 +180,30 @@ tuned to each org's terminology and conventions.
 - ADR filename format: `adr/MX-<slug>.md` (e.g., `adr/M1-dual-backend-interface.md`)
 - Milestone artifacts: `milestones/MX/PLAN.md`, `milestones/MX/REPORT.md`
 - Blog post drafts: `content/posts/milestone-MX.md`
+
+---
+
+## Cross-cutting conventions (apply to every milestone)
+
+1. **Cost-per-correct-answer in every milestone report.** Not just
+   M12. This is the metric that distinguishes the project from
+   generic LLM serving portfolios at the $400K hire tier.
+2. **Hamel Husain eval doctrine.** Every milestone with quality
+   claims uses binary pass/fail judge + classifier validation
+   (precision / recall on a labeled set of 100+ examples) + paired
+   bootstrap or McNemar's test for statistical significance.
+3. **OpenTelemetry GenAI semconv from M1.** All LLM instrumentation
+   goes through OpenLLMetry against the GenAI semconv from the first
+   milestone. M8 brings full agent-loop coverage and Phoenix Span
+   Replay; M1-M7 wire basic spans against the same schema.
+4. **OWASP coverage doc.** `docs/owasp-coverage.md` maps OWASP LLM
+   Top 10 2026 + OWASP Agentic Top 10 2026 to specific milestone
+   test cases. Updated as milestones complete.
+5. **vLLM disagg prefill caveat.** Disagg prefill is still
+   experimental as of April 2026; improves tail ITL but not
+   throughput. Frame it as a tail-latency vs throughput tradeoff,
+   with Sarathi-Serve chunked prefill as the alternative — never
+   claim throughput win.
 
 ---
 
