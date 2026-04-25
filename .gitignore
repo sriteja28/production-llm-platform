@@ -30,8 +30,10 @@ ENV/
 *.swo
 .DS_Store
 
-# Claude Code local settings
-.claude/
+# Claude Code — ignore user-local + runtime state; commit shared settings.json and agents/
+.claude/settings.local.json
+.claude/cache/
+.claude/state/
 CLAUDE.local.md
 
 # Notebooks
