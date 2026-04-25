@@ -10,13 +10,16 @@ anchors live in dedicated docs and evolve as the project progresses.
 
 ## Project description
 
-This is **production-llm-platform** — an end-to-end production AI
-engineering platform demonstrating the full stack: LLM serving
-infrastructure, multi-tenancy, RAG, agents, evals, observability, and
-cost optimization. The anchor scenario is a multi-tenant SaaS serving
-AI document intelligence to law firms (per-firm document libraries,
-mixed short-prompt + long-document traffic, per-firm LoRA adapters,
-SOC 2 compliance pressure, real cost economics).
+This is **production-llm-platform** — a multi-tenant LLM serving
+platform built for reasoning-and-agent workloads. The technical
+anchor: scheduling, caching, and cost control when output length is
+unpredictable (reasoning traces from 10 to 30,000+ tokens) and KV
+state persists across hundreds of agent turns. The platform spans
+inference, RAG, agents, evals, observability, and cost economics
+end-to-end across 12 milestones. Anchor scenario: a multi-tenant SaaS
+where lawyers run multi-step reasoning agents over firm-specific
+document libraries — per-firm LoRA adapters, SOC 2 compliance
+pressure, real cost economics.
 
 ---
 
@@ -33,13 +36,14 @@ SOC 2 compliance pressure, real cost economics).
    recreating libraries.
 
 3. **Pick a specific realistic scenario to anchor the entire project.**
-   Default scenario: a multi-tenant SaaS serving AI document
-   intelligence to law firms (lawyers query firm-specific document
-   libraries, mixed short-prompt + long-document traffic, per-firm LoRA
-   adapters, SOC 2 compliance pressure, cost economics matter). All
-   milestones build features for this scenario. The concrete, named
-   scenario is what makes the portfolio narrative interview-defensible
-   instead of generic.
+   Default scenario: a multi-tenant SaaS where lawyers run multi-step
+   reasoning agents over firm-specific document libraries —
+   variable-length reasoning traces, KV state across hundreds of agent
+   turns, per-firm LoRA adapters, SOC 2 compliance pressure, real cost
+   economics. All milestones build features for this workload rather
+   than generic synthetic benchmarks. The concrete, named workload is
+   what makes architecture choices defensible against open-source
+   baselines (vLLM, SGLang, llm-d).
 
 4. **Deliberately introduce production failures and debug them in
    public.** Each milestone has explicit "what kills this in production"

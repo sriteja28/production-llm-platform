@@ -2,27 +2,31 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A multi-tenant LLM serving platform demonstrating end-to-end production
-AI infrastructure: inference serving, RAG, agents, evals, observability,
-and cost optimization. Built deliberately to hit 12 production
-roadblocks and solve each one publicly.
+A multi-tenant LLM serving platform built for reasoning-and-agent
+workloads — scheduling, caching, and cost control when output length
+is unpredictable (reasoning traces from 10 to 30,000+ tokens) and KV
+state persists across hundreds of agent turns. Spans inference, RAG,
+agents, evals, observability, and cost economics across 12 milestones,
+with deliberate production failures debugged publicly.
 
 ## Status
 
-Active build. Scaffolding committed; Milestone 1 (naive baseline +
-dual-backend abstraction + measurement) is next. The full milestone
-plan, GPU budgets, and deliverables structure live in
+Active build. Scaffolding committed; Milestone 1 (reasoning-aware
+baseline + dual-backend abstraction + measurement) is next. The full
+milestone plan, GPU budgets, and deliverables structure live in
 [docs/build-plan.md](./docs/build-plan.md). Milestone reports land in
 `milestones/MX/REPORT.md` as each milestone completes.
 
 ## Anchor scenario
 
-A multi-tenant SaaS serving AI document intelligence to law firms:
-per-firm document libraries, mixed short-prompt + long-document
-traffic, per-firm LoRA adapters, SOC 2 compliance pressure, real cost
-economics. Every milestone builds features for this scenario rather
-than generic synthetic benchmarks — the concrete, named scenario is
-what makes the architecture choices interview-defensible.
+A multi-tenant SaaS where lawyers run multi-step reasoning agents over
+firm-specific document libraries: variable-length reasoning traces, KV
+state persisting across hundreds of agent turns, per-firm LoRA
+adapters, SOC 2 compliance pressure, real cost economics. Every
+milestone builds features for this workload rather than generic
+synthetic benchmarks — the concrete, named workload is what makes the
+architecture choices defensible against open-source baselines like
+vLLM, SGLang, and llm-d.
 
 ## Architecture
 
