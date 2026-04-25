@@ -2,10 +2,66 @@
 
 A curated 3-4 week foundation for a senior systems engineer entering
 AI infrastructure. Ruthlessly prioritized to build production-AI
-engineering depth before writing any code for the platform.
+engineering depth before writing any code.
 
-Complete this BEFORE starting Milestone 1 of the production-llm-platform
-build.
+This curriculum was assembled while building
+[production-llm-platform](https://github.com/sriteja28/production-llm-platform)
+— a multi-tenant LLM serving platform for reasoning-and-agent
+workloads — but it stands alone for anyone entering this space.
+Fork and adapt freely (MIT-licensed).
+
+## Who this is for
+
+You're a good fit if:
+
+- You're an experienced backend / distributed-systems / SRE /
+  platform engineer (5+ years) entering AI infrastructure as a new
+  specialty.
+- You don't need a from-scratch ML degree — you need the minimum
+  viable foundation to read vLLM scheduler code, understand KV
+  cache design, and reason about reasoning-model inference
+  economics.
+- You're targeting senior-IC roles in AI infrastructure (serving,
+  scheduling, GPU economics) or AI engineering (production AI
+  systems), and you need depth fluency, not a breadth survey.
+- You learn by doing — every Tier 1 item has hands-on code, not
+  just reading.
+
+You're NOT a good fit if:
+
+- You want a comprehensive ML curriculum (use Andrew Ng's Deep
+  Learning Specialization or fast.ai instead).
+- You're targeting AI/ML research roles (you'll need different math
+  foundations).
+- You're a junior engineer — this assumes 5+ years of production
+  systems experience as the substrate.
+
+## How to use this
+
+1. **Day 0 first** — environment setup + a reasoning-model smoke
+   test on Apple Silicon (or comparable local hardware). This makes
+   the abstract concepts in Week 1 concrete.
+2. **Tier 1** is the must-do 80% (~50 hours of work).
+3. **Tier 2** is the next 15% (~15 hours).
+4. **Tier 3** is reference material — read when relevant, not now.
+5. **Self-test** at the end (12 questions). 10/12 passes; 6-7/12
+   means repeat Weeks 2-3 before starting any build.
+6. **Parallel community actions** — run these alongside the reading,
+   not after. They compound while you learn.
+7. **Fork and adapt.** If your target role, hardware (no Apple
+   Silicon), or cloud provider differs, modify the commands and
+   reading list. This is a starting point, not gospel.
+
+Estimated time: ~50-70 hours at full-time pace, 3-4 weeks.
+
+If you finish this curriculum and want to see what a senior-level
+build using it looks like, the
+[production-llm-platform](https://github.com/sriteja28/production-llm-platform)
+repo contains the 12-milestone arc that takes the same person from
+"foundations passed" to a flagship benchmark on cost-per-correct-
+answer for reasoning + agent workloads.
+
+---
 
 ## Operating Principles
 
