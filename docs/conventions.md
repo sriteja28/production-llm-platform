@@ -169,6 +169,24 @@ stack.
    throughput. Frame as a tail-latency vs throughput tradeoff with
    Sarathi-Serve chunked prefill as the alternative — never claim
    throughput win.
+6. **Three-artifact discipline per milestone.** Every milestone
+   ships three public artifacts: (A) a public OSS contribution
+   (upstream PR to vLLM / SGLang / llm-d) OR a measured benchmark
+   on a named workload; (B) the Spider code that exercises it; (C) a
+   debugging-war-story blog post on the deliberate roadblock. Not
+   "a feature I added to my repo" — something a stranger can use,
+   verify, or merge. The three-artifact discipline is what turns the
+   project from a portfolio repo into a hiring funnel.
+7. **Public roadblock walkthroughs (not private notes).** Every
+   milestone's deliberate production failure becomes a public,
+   reproducible debug walkthrough in `milestones/MX/REPORT.md` and
+   in the milestone's blog post. Lead with the symptom (TTFT spike,
+   noisy neighbor, KV thrash, ACL leak), walk through the trace,
+   name the root cause, ship the fix with measured before/after
+   numbers. The Aleksa Gordić "Inside vLLM" pattern, NOT academic
+   "what I built" tone. This is the FDE / SRE differentiator —
+   hiring managers see how this person actually traces production
+   failures, not just what they shipped.
 
 ---
 

@@ -46,14 +46,36 @@ When invoked for Milestone N:
    for review):
    - `milestones/M_N/PLAN.md` — what we're building, expected
      learnings, expected production roadblocks, local-vs-cloud
-     workflow plan, estimated GPU cost, deliverables checklist,
-     concept questions for self-test, what this milestone is NOT
-   - Empty stubs for `milestones/M_N/REPORT.md` (header only)
+     workflow plan, estimated GPU cost, **three-artifact checklist
+     (A/B/C below)**, concept questions for self-test, what this
+     milestone is NOT
+   - `milestones/M_N/REPORT.md` (template stub) — must include a
+     **"Public debug walkthrough"** section header. Every milestone's
+     deliberate roadblock becomes a public, reproducible debug
+     walkthrough — not a private engineering note. This is the
+     FDE / SRE differentiator: hiring managers see how this person
+     actually traces production failures.
    - `adr/M_N-<slug>.md` files for the architectural decisions you
      identify during scaffolding (interface design, library
      comparison, tradeoff capture)
-   - `content/posts/milestone-M_N.md` outline (title, headers, key
-     numbers placeholders)
+   - `content/posts/milestone-M_N.md` outline — **debugging-war-story
+     tone** (lead with symptom, walk through trace, name root cause,
+     ship fix with measured before/after numbers — Aleksa Gordić
+     "Inside vLLM" pattern, NOT academic "what I built" tone). See
+     `_private/docs/publishing-plan.md` for the tone guide.
+
+**The three-artifact discipline (A/B/C)** — every milestone ships
+three public artifacts, not one. PLAN.md must call these out
+explicitly:
+- **A. Public OSS contribution OR measured benchmark.** Upstream PR
+  to vLLM / SGLang / llm-d (preferred), reproducible benchmark
+  report with measured numbers, or measured ADR with primary-source
+  data. Not "a feature I added to my repo" — something a stranger
+  can use, verify, or merge.
+- **B. Spider code that exercises it.** Wired into the pluggable
+  backend interface, OTel GenAI semconv instrumented, tested.
+- **C. Debugging-war-story blog post.** The deliberate roadblock,
+  publicly traced and fixed.
 
 4. **Apply cross-cutting conventions** (from `docs/conventions.md`):
    - Cost-per-correct-answer mentioned in PLAN.md success criteria
@@ -102,10 +124,15 @@ End your scaffolding output with this structure:
 
 ```
 ## Scaffolded files
-- milestones/MN/PLAN.md
-- milestones/MN/REPORT.md (stub)
+- milestones/MN/PLAN.md (with three-artifact checklist A/B/C)
+- milestones/MN/REPORT.md (stub — includes "Public debug walkthrough" section header)
 - adr/MN-<slug>.md (× N ADRs)
-- content/posts/milestone-MN.md (outline)
+- content/posts/milestone-MN.md (outline — debugging-war-story tone)
+
+## Three artifacts this milestone will ship
+A. [Public OSS contribution or measured benchmark — name the target repo / benchmark]
+B. [Spider code that exercises it — name the modules touched]
+C. [Debugging-war-story blog post — name the symptom that opens the post]
 
 ## Phase A clarifying questions
 1. [question]
